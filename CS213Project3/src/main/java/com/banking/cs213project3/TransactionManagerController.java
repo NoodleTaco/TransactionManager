@@ -8,7 +8,15 @@ public class TransactionManagerController {
     private Label welcomeText;
 
     @FXML
+    private Label firstName;
+
+    @FXML
+    private Label lastName;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
+
+
 }
