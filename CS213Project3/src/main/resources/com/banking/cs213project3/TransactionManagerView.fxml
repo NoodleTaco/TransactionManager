@@ -57,8 +57,8 @@
                                     <RadioButton mnemonicParsing="false" text="MoneyMarket" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
-                              <TextField GridPane.columnIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="firstNameInput" GridPane.columnIndex="1" />
+                              <TextField fx:id="lastNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
@@ -80,8 +80,8 @@
                               </GridPane>
                               <HBox prefHeight="28.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Open" />
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Close" />
+                                    <Button fx:id="openAccountButton" mnemonicParsing="false" onAction="#openButtonClick" prefHeight="25.0" prefWidth="117.0" text="Open" />
+                                    <Button fx:id="closeAccount" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Close" />
                                  </children>
                               </HBox>
                            </children>
