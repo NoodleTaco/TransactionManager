@@ -123,10 +123,10 @@
                               <Label text="Date of Birth" GridPane.rowIndex="2" />
                               <Label text="Account Type" GridPane.rowIndex="3" />
                               <Label text="Amount" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="interactionFirstNameInput" GridPane.columnIndex="1" />
+                              <TextField fx:id="interactionLastNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="interactionAmount" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="interactionDateInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -137,16 +137,20 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="Checking" />
-                                    <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" />
-                                    <RadioButton mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
-                                    <RadioButton mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <RadioButton fx:id="checkingInteractionButton" mnemonicParsing="false" text="Checking">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="accountInteractionTypes" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="collegeCheckingInteractionButton" mnemonicParsing="false" text="College Checking" toggleGroup="$accountInteractionTypes" GridPane.columnIndex="1" />
+                                    <RadioButton fx:id="savingsInteractionButton" mnemonicParsing="false" text="Savings" toggleGroup="$accountInteractionTypes" GridPane.rowIndex="1" />
+                                    <RadioButton fx:id="moneyMarketInteractionButton" mnemonicParsing="false" text="Money Market" toggleGroup="$accountInteractionTypes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="161.0" text="Deposit" />
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="165.0" text="Withdraw" />
+                                    <Button fx:id="depositButton" mnemonicParsing="false" onAction="#depositClick" prefHeight="25.0" prefWidth="161.0" text="Deposit" />
+                                    <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdrawClick" prefHeight="25.0" prefWidth="165.0" text="Withdraw" />
                                  </children>
                               </HBox>
                            </children>

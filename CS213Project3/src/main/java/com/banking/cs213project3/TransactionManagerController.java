@@ -27,17 +27,20 @@ public class TransactionManagerController {
     }
 
     @FXML
-    private TextField firstNameInput, lastNameInput, balanceInput;
+    private TextField firstNameInput, lastNameInput, balanceInput, interactionFirstNameInput, interactionLastNameInput,
+            interactionAmount;
 
     @FXML
-    private DatePicker dateInput;
+    private DatePicker dateInput, interactionDateInput;
 
     @FXML
-    private Button openAccountButton, closeAccountButton;
+    private Button openAccountButton, closeAccountButton, depositButton, withdrawButton, printAccountButton,
+            printAccountsFeesAndInterestButton, updateInterestsAndFees, loadAccountsButton;
 
     @FXML
     private RadioButton checkingButton, collegeCheckingButton, savingsButton, moneyMarketButton, newBrunswickButton,
-            newarkButton, camdenButton, isLoyalButton;
+            newarkButton, camdenButton, isLoyalButton,checkingInteractionButton, collegeCheckingInteractionButton,
+            savingsInteractionButton, moneyMarketInteractionButton;
 
     @FXML
     private TextArea openCloseTextArea;
@@ -96,6 +99,57 @@ public class TransactionManagerController {
         {
             return null;
         }
+    }
+
+    private String getInteractionAccountType(){
+
+        if(checkingInteractionButton.isSelected()){
+            return "C";
+        }
+        else if(collegeCheckingInteractionButton.isSelected())
+        {
+            return "CC";
+        }
+        else if(savingsInteractionButton.isSelected())
+        {
+            return "S";
+        }
+        else if(moneyMarketInteractionButton.isSelected())
+        {
+            return "MM";
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void depositClick(){
+        String accountType = getInteractionAccountType();
+        String firstName = interactionFirstNameInput.getText();
+        String lastName = interactionLastNameInput.getText();
+        String dob = interactionDateInput.getValue().toString();
+        String balance = interactionAmount.getText();
+
+        String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
+
+        StringTokenizer stringTokenizer = new StringTokenizer(toBeTokenized);
+
+        depositAccount(stringTokenizer);
+    }
+
+    public void withdrawClick(){
+        String accountType = getInteractionAccountType();
+        String firstName = interactionFirstNameInput.getText();
+        String lastName = interactionLastNameInput.getText();
+        String dob = interactionDateInput.getValue().toString();
+        String balance = interactionAmount.getText();
+
+        String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
+
+        StringTokenizer stringTokenizer = new StringTokenizer(toBeTokenized);
+
+        withdrawAccount(stringTokenizer);
     }
 
     private String getCampusCode(){
@@ -238,10 +292,131 @@ public class TransactionManagerController {
         }
     }
 
+    private void depositAccount(StringTokenizer stringTokenizer){
+        if(stringTokenizer.countTokens() != O_STRING_TOKENIZER_MIN_SIZE)
+        {
+            openCloseTextArea.appendText("Missing data for a deposit."+ "\n");
+            return;
+        }
+
+        String accountInput = stringTokenizer.nextToken();
+
+        Account account;
+
+        if(isValidAccountInput(accountInput))
+        {
+            account = processAccountTypeInput(accountInput);
+        }
+        else
+        {
+            openCloseTextArea.appendText("Invalid Account Type"+ "\n");
+            return;
+        }
+        if(!blindProcessProfileInput(stringTokenizer.nextToken(),stringTokenizer.nextToken(),stringTokenizer.nextToken(),account) )
+        {
+            return;
+        }
+        if(!processBalanceInput(stringTokenizer.nextToken(), account))
+        {
+            return;
+        }
+
+        if(accountDatabase.contains(account))
+        {
+            accountDatabase.deposit(account);
+            openCloseTextArea.appendText(accountString(account) + " Deposit - balance updated."+ "\n");
+        }
+        else
+        {
+            openCloseTextArea.appendText(accountString(account) + " account is not in database."+ "\n");
+        }
+    }
+
+    private void withdrawAccount(StringTokenizer stringTokenizer){
+        if(stringTokenizer.countTokens() != O_STRING_TOKENIZER_MIN_SIZE)
+        {
+            openCloseTextArea.appendText("Missing data for a withdrawal."+ "\n");
+            return;
+        }
+        String accountInput = stringTokenizer.nextToken();
+        Account account;
+
+        if(isValidAccountInput(accountInput))
+        {
+            account = processAccountTypeInput(accountInput);
+        }
+        else
+        {
+            openCloseTextArea.appendText("Invalid Account Type"+ "\n");
+            return;
+        }
+        if(!blindProcessProfileInput(stringTokenizer.nextToken(),stringTokenizer.nextToken(),stringTokenizer.nextToken(),account) ) {
+            return;
+        }
+        if(!processBalanceInput(stringTokenizer.nextToken(), account)) {
+            return;
+        }
+
+        if(!accountDatabase.contains(account)) {
+            openCloseTextArea.appendText(accountString(account) + "Withdraw - Account is not in database."+ "\n");
+            return;
+        }
+
+        if(accountDatabase.withdraw(account)) {
+            openCloseTextArea.appendText(accountString(account) + "Withdraw - balance updated."+ "\n");
+        }
+        else {
+            openCloseTextArea.appendText(accountString(account) + "Withdraw - insufficient fund."+ "\n");
+            return;
+        }
+    }
+
     //TO DO!!!!
     public void clearButtonClick(ActionEvent event){
 
     }
+
+    public void printAccountsClick(ActionEvent event){
+        if(accountDatabase.getNumAcct() == 0)
+        {
+            openCloseTextArea.appendText("Account Database is empty!"+ "\n");
+            return;
+        }
+        openCloseTextArea.appendText("\n");
+        openCloseTextArea.appendText("*Accounts sorted by account type and profile."+ "\n");
+        accountDatabase.printSorted();
+        openCloseTextArea.appendText("*end of list."+ "\n");
+        openCloseTextArea.appendText("\n");
+    }
+
+    public void printAccountsFeesAndInterestsClick(ActionEvent event){
+        if(accountDatabase.getNumAcct() == 0)
+        {
+            openCloseTextArea.appendText("Account Database is empty!"+ "\n");
+            return;
+        }
+        openCloseTextArea.appendText("\n");
+        openCloseTextArea.appendText("*list of accounts with fee and monthly interest"+ "\n");
+        accountDatabase.printFeesAndInterests();
+        openCloseTextArea.appendText("*end of list."+ "\n");
+        openCloseTextArea.appendText("\n");
+    }
+
+    public void updateFeesAndInterestsClick(ActionEvent event){
+        if(accountDatabase.getNumAcct() == 0)
+        {
+            openCloseTextArea.appendText("Account Database is empty!"+ "\n");
+            return;
+        }
+        openCloseTextArea.appendText("\n");
+        openCloseTextArea.appendText("*list of accounts with fees and interests applied."+ "\n");
+        accountDatabase.printUpdatedBalances();
+        openCloseTextArea.appendText("*end of list."+ "\n");
+        openCloseTextArea.appendText("\n");
+    }
+
+
+
 
     /**
      * Creates a new Account subclass based on a String input
@@ -297,7 +472,7 @@ public class TransactionManagerController {
         }
         catch (Exception e)
         {
-            openCloseTextArea.appendText("Invalid Date Input"+ "\n");
+            openCloseTextArea.appendText("Invalid Date Input"+ "\n"+ "\n");
             return false;
         }
         account.setProfile(profile);
@@ -487,6 +662,53 @@ public class TransactionManagerController {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Creates a profile for the deposit and withdrawal classes to check
+     * Does not check for a valid profile since deposit and withdrawal check if the profile is in the database
+     * @param fName The first name of the profile
+     * @param lName The last name of the profile
+     * @param dob The date of birth of the profile
+     * @param account The account object where the profile will be added
+     * @return false if there are error in the inputs, true if a working profile is created and assigned
+     */
+    private boolean blindProcessProfileInput(String fName, String lName, String dob,Account account)
+    {
+        Profile profile = new Profile();
+        profile.setFname(fName);
+        profile.setLname(lName);
+
+        try
+        {
+            blindProcessDateInput(profile, dob);
+        }
+        catch (Exception e)
+        {
+            openCloseTextArea.appendText("Invalid Date Input"+ "\n");
+            return false;
+        }
+        account.setProfile(profile);
+        return true;
+    }
+
+    /**
+     * Creates a date for the blindProcessProfileInput function
+     * Does not check for invalid dates
+     * @param profile The profile for the date to be assigned to
+     * @param dateInput The string input that holds the date's information
+     */
+    private void blindProcessDateInput(Profile profile, String dateInput)
+    {
+        StringTokenizer dashSeparator = new StringTokenizer(dateInput, "-");
+        int year = Integer.parseInt(dashSeparator.nextToken());
+        int month = Integer.parseInt(dashSeparator.nextToken());
+        int day = Integer.parseInt(dashSeparator.nextToken());
+
+        Date date = new Date(month, day, year);
+
+        profile.setDob(date);
+        return;
     }
 
     /**
