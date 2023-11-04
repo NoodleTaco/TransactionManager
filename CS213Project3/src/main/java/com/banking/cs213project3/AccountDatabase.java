@@ -154,7 +154,7 @@ public class AccountDatabase {
             MoneyMarket moneyMarket = (MoneyMarket)accounts[index];
             moneyMarket.setWithdrawal(moneyMarket.getWithdrawal() + 1);
             moneyMarket.checkLoyalCustomer();
-            System.out.println(accounts[index].toString());
+            //System.out.println(accounts[index].toString());
 
         }
         return true;
@@ -182,38 +182,47 @@ public class AccountDatabase {
     /**
      * prints the accounts array in a sorted manner based on their account types and profiles.
      */
-    public void printSorted()
+    public String printSorted()
     {
         sort();
+        String toBeReturned = "";
         for(int i = 0; i < numAcct; i++)
         {
-            System.out.println(accounts[i].toString());
+            toBeReturned += accounts[i].toString() + "#@";
         }
+        System.out.println(toBeReturned);
+        return toBeReturned;
     } //sort by account type and profile
 
     /**
      * Prints the fees and interests of the accounts array.
      */
-    public void printFeesAndInterests()
+    public String printFeesAndInterests()
     {
         sort();
+        String toBeReturned = "";
         for(int i = 0; i < numAcct; i++)
         {
-            System.out.println(accounts[i].toString() + accounts[i].formatFeesAndInterest());
+            toBeReturned += accounts[i].toString() + accounts[i].formatFeesAndInterest() + "#@";
         }
+        return toBeReturned;
     } //calculate interests/fees
 
     /**
      * Print the updated balances of the accounts array.
      */
-    public void printUpdatedBalances()
+    public String printUpdatedBalances()
     {
         updateBalances();
         sort();
+
+        String toBeReturned = "";
         for(int i = 0; i < numAcct; i++)
         {
-            System.out.println(accounts[i].toString());
+            toBeReturned += accounts[i].toString() + "#@";
         }
+        return toBeReturned;
+
     } //apply the interests/fees
 
     /**

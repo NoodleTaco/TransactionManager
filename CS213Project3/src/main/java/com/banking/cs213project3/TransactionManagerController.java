@@ -3,8 +3,11 @@ package com.banking.cs213project3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.io.File;
 
 public class TransactionManagerController {
 
@@ -44,6 +47,38 @@ public class TransactionManagerController {
 
     @FXML
     private TextArea openCloseTextArea;
+
+
+    public void loadAccountsButtonClick(){
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        try {
+            Scanner scanner = new Scanner(selectedFile);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if(!line.isBlank())
+                {
+                    System.out.println(line);
+                    StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
+                    /*
+                    while(stringTokenizer.hasMoreTokens())
+                    {
+                        System.out.println(stringTokenizer.nextToken());
+                    }
+
+                     */
+                        openAccount(stringTokenizer);
+                }
+
+            }
+        }
+        catch (Exception e){
+            openCloseTextArea.appendText("Invalid File Input"+ "\n");
+        }
+
+    }
+
 
     /**
      * Enables buttons related to specific account types and disables them if that account type is not selected
@@ -128,7 +163,7 @@ public class TransactionManagerController {
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
         String lastName = interactionLastNameInput.getText();
-        String dob = interactionDateInput.getValue().toString();
+        String dob = convertDate(interactionDateInput.getValue().toString());
         String balance = interactionAmount.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -142,7 +177,7 @@ public class TransactionManagerController {
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
         String lastName = interactionLastNameInput.getText();
-        String dob = interactionDateInput.getValue().toString();
+        String dob = convertDate(interactionDateInput.getValue().toString());
         String balance = interactionAmount.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -176,7 +211,7 @@ public class TransactionManagerController {
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
-        String dob = dateInput.getValue().toString();
+        String dob = convertDate(dateInput.getValue().toString());
         String balance = balanceInput.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -200,6 +235,21 @@ public class TransactionManagerController {
 
         StringTokenizer stringTokenizer = new StringTokenizer(toBeTokenized);
         openAccount(stringTokenizer);
+    }
+
+    /**
+     * Converts the date from the date selector into the form month/day/year
+     * @param dateInput
+     * @return
+     */
+    private String convertDate(String dateInput)
+    {
+        StringTokenizer stringTokenizer = new StringTokenizer(dateInput, "-");
+        String year = stringTokenizer.nextToken();
+        String month = stringTokenizer.nextToken();
+        String day = stringTokenizer.nextToken();
+
+        return month + "/" + day + "/" + year;
     }
 
 
@@ -249,7 +299,7 @@ public class TransactionManagerController {
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
-        String dob = dateInput.getValue().toString();
+        String dob = convertDate(dateInput.getValue().toString());
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob;
 
@@ -377,6 +427,18 @@ public class TransactionManagerController {
     }
 
     public void printAccountsClick(ActionEvent event){
+        printAccounts();
+    }
+
+    public void printAccountsFeesAndInterestsClick(ActionEvent event){
+        printAccountsWithFeesAndInterests();
+    }
+
+    public void updateFeesAndInterestsClick(ActionEvent event){
+        printUpdatedAccounts();
+    }
+
+    private void printAccounts(){
         if(accountDatabase.getNumAcct() == 0)
         {
             openCloseTextArea.appendText("Account Database is empty!"+ "\n");
@@ -384,12 +446,15 @@ public class TransactionManagerController {
         }
         openCloseTextArea.appendText("\n");
         openCloseTextArea.appendText("*Accounts sorted by account type and profile."+ "\n");
-        accountDatabase.printSorted();
+        StringTokenizer stringTokenizer = new StringTokenizer(accountDatabase.printSorted(), "#@");
+        while(stringTokenizer.hasMoreTokens())
+        {
+            openCloseTextArea.appendText(stringTokenizer.nextToken() + "\n");
+        }
         openCloseTextArea.appendText("*end of list."+ "\n");
         openCloseTextArea.appendText("\n");
     }
-
-    public void printAccountsFeesAndInterestsClick(ActionEvent event){
+    private void printAccountsWithFeesAndInterests(){
         if(accountDatabase.getNumAcct() == 0)
         {
             openCloseTextArea.appendText("Account Database is empty!"+ "\n");
@@ -397,12 +462,17 @@ public class TransactionManagerController {
         }
         openCloseTextArea.appendText("\n");
         openCloseTextArea.appendText("*list of accounts with fee and monthly interest"+ "\n");
-        accountDatabase.printFeesAndInterests();
+
+        StringTokenizer stringTokenizer = new StringTokenizer(accountDatabase.printFeesAndInterests(), "#@");
+        while(stringTokenizer.hasMoreTokens())
+        {
+            openCloseTextArea.appendText(stringTokenizer.nextToken() + "\n");
+        }
         openCloseTextArea.appendText("*end of list."+ "\n");
         openCloseTextArea.appendText("\n");
     }
 
-    public void updateFeesAndInterestsClick(ActionEvent event){
+    private void printUpdatedAccounts(){
         if(accountDatabase.getNumAcct() == 0)
         {
             openCloseTextArea.appendText("Account Database is empty!"+ "\n");
@@ -410,7 +480,12 @@ public class TransactionManagerController {
         }
         openCloseTextArea.appendText("\n");
         openCloseTextArea.appendText("*list of accounts with fees and interests applied."+ "\n");
-        accountDatabase.printUpdatedBalances();
+
+        StringTokenizer stringTokenizer = new StringTokenizer(accountDatabase.printUpdatedBalances(), "#@");
+        while(stringTokenizer.hasMoreTokens())
+        {
+            openCloseTextArea.appendText(stringTokenizer.nextToken() + "\n");
+        }
         openCloseTextArea.appendText("*end of list."+ "\n");
         openCloseTextArea.appendText("\n");
     }
@@ -488,10 +563,10 @@ public class TransactionManagerController {
      */
     private boolean processDateInput(Profile profile, String dateInput, Account account)
     {
-        StringTokenizer dashSeparator = new StringTokenizer(dateInput, "-");
-        int year = Integer.parseInt(dashSeparator.nextToken());
-        int month = Integer.parseInt(dashSeparator.nextToken());
-        int day = Integer.parseInt(dashSeparator.nextToken());
+        StringTokenizer backSlashSeparator = new StringTokenizer(dateInput, "/");
+        int month = Integer.parseInt(backSlashSeparator.nextToken());
+        int day = Integer.parseInt(backSlashSeparator.nextToken());
+        int year = Integer.parseInt(backSlashSeparator.nextToken());
 
         Date date = new Date(month, day, year);
 
@@ -700,10 +775,10 @@ public class TransactionManagerController {
      */
     private void blindProcessDateInput(Profile profile, String dateInput)
     {
-        StringTokenizer dashSeparator = new StringTokenizer(dateInput, "-");
-        int year = Integer.parseInt(dashSeparator.nextToken());
-        int month = Integer.parseInt(dashSeparator.nextToken());
-        int day = Integer.parseInt(dashSeparator.nextToken());
+        StringTokenizer backSlashSeparator = new StringTokenizer(dateInput, "/");
+        int month = Integer.parseInt(backSlashSeparator.nextToken());
+        int day = Integer.parseInt(backSlashSeparator.nextToken());
+        int year = Integer.parseInt(backSlashSeparator.nextToken());
 
         Date date = new Date(month, day, year);
 

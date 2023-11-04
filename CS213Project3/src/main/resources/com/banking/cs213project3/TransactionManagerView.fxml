@@ -172,10 +172,10 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="306.0" text="Print Accounts" />
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="305.0" text="Print Accounts with Interest and Fees" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="306.0" text="Update Interests and Fees" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="305.0" text="Load Accounts From a File" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="printAccountButton" mnemonicParsing="false" onAction="#printAccountsClick" prefHeight="45.0" prefWidth="306.0" text="Print Accounts" />
+                              <Button fx:id="printAccountsFeesAndInterestButton" mnemonicParsing="false" onAction="#printAccountsFeesAndInterestsClick" prefHeight="45.0" prefWidth="305.0" text="Print Accounts with Interest and Fees" GridPane.columnIndex="1" />
+                              <Button fx:id="updateInterestsAndFees" mnemonicParsing="false" onAction="#updateFeesAndInterestsClick" prefHeight="45.0" prefWidth="306.0" text="Update Interests and Fees" GridPane.rowIndex="1" />
+                              <Button fx:id="loadAccountsButton" mnemonicParsing="false" onAction="#loadAccountsButtonClick" prefHeight="45.0" prefWidth="305.0" text="Load Accounts From a File" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>
