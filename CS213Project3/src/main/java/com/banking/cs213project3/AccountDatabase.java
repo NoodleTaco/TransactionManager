@@ -154,7 +154,7 @@ public class AccountDatabase {
             MoneyMarket moneyMarket = (MoneyMarket)accounts[index];
             moneyMarket.setWithdrawal(moneyMarket.getWithdrawal() + 1);
             moneyMarket.checkLoyalCustomer();
-            //System.out.println(accounts[index].toString());
+
 
         }
         return true;
@@ -190,7 +190,6 @@ public class AccountDatabase {
         {
             toBeReturned += accounts[i].toString() + "#@";
         }
-        System.out.println(toBeReturned);
         return toBeReturned;
     } //sort by account type and profile
 
