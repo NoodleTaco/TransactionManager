@@ -38,7 +38,8 @@ public class TransactionManagerController {
 
     @FXML
     private Button openAccountButton, closeAccountButton, depositButton, withdrawButton, printAccountButton,
-            printAccountsFeesAndInterestButton, updateInterestsAndFees, loadAccountsButton;
+            printAccountsFeesAndInterestButton, updateInterestsAndFees, loadAccountsButton, clearButton,
+            clearInteractionButton;
 
     @FXML
     private RadioButton checkingButton, collegeCheckingButton, savingsButton, moneyMarketButton, newBrunswickButton,
@@ -59,16 +60,8 @@ public class TransactionManagerController {
                 String line = scanner.nextLine();
                 if(!line.isBlank())
                 {
-                    System.out.println(line);
                     StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
-                    /*
-                    while(stringTokenizer.hasMoreTokens())
-                    {
-                        System.out.println(stringTokenizer.nextToken());
-                    }
-
-                     */
-                        openAccount(stringTokenizer);
+                    openAccount(stringTokenizer);
                 }
 
             }
@@ -108,6 +101,33 @@ public class TransactionManagerController {
             camdenButton.setDisable(true);
             isLoyalButton.setDisable(false);
         }
+    }
+
+    //TO DO!!!!
+    public void clearButtonClick(ActionEvent event){
+        firstNameInput.clear();
+        lastNameInput.clear();
+        dateInput.setValue(null);
+        checkingButton.setSelected(false);
+        collegeCheckingButton.setSelected(false);
+        savingsButton.setSelected(false);
+        moneyMarketButton.setSelected(false);
+        newBrunswickButton.setSelected(false);
+        newarkButton.setSelected(false);
+        camdenButton.setSelected(false);
+        isLoyalButton.setSelected(false);
+        balanceInput.clear();
+    }
+
+    public void interactionClearButtonClick(ActionEvent event){
+        interactionFirstNameInput.clear();
+        interactionLastNameInput.clear();
+        interactionDateInput.setValue(null);
+        checkingInteractionButton.setSelected(false);
+        collegeCheckingInteractionButton.setSelected(false);
+        savingsInteractionButton.setSelected(false);
+        moneyMarketInteractionButton.setSelected(false);
+        interactionAmount.clear();
     }
 
     /**
@@ -421,10 +441,7 @@ public class TransactionManagerController {
         }
     }
 
-    //TO DO!!!!
-    public void clearButtonClick(ActionEvent event){
 
-    }
 
     public void printAccountsClick(ActionEvent event){
         printAccounts();

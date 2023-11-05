@@ -67,7 +67,7 @@
                               <TextField fx:id="lastNameInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="balanceInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <DatePicker fx:id="dateInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearButtonClick" prefHeight="25.0" prefWidth="97.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                               <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -149,8 +149,9 @@
                               </GridPane>
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Button fx:id="depositButton" mnemonicParsing="false" onAction="#depositClick" prefHeight="25.0" prefWidth="161.0" text="Deposit" />
-                                    <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdrawClick" prefHeight="25.0" prefWidth="165.0" text="Withdraw" />
+                                    <Button fx:id="depositButton" mnemonicParsing="false" onAction="#depositClick" prefHeight="25.0" prefWidth="100.0" text="Deposit" />
+                                    <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdrawClick" prefHeight="25.0" prefWidth="103.0" text="Withdraw" />
+                                    <Button fx:id="clearInteractionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#interactionClearButtonClick" prefHeight="25.0" prefWidth="100.0" text="Clear" />
                                  </children>
                               </HBox>
                            </children>
