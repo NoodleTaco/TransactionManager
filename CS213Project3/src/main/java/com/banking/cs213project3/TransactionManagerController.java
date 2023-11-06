@@ -31,10 +31,9 @@ public class TransactionManagerController {
 
     @FXML
     private TextField firstNameInput, lastNameInput, balanceInput, interactionFirstNameInput, interactionLastNameInput,
-            interactionAmount;
+            interactionAmount, dateInput, interactionDateInput;
 
-    @FXML
-    private DatePicker dateInput, interactionDateInput;
+
 
     @FXML
     private Button openAccountButton, closeAccountButton, depositButton, withdrawButton, printAccountButton,
@@ -76,7 +75,6 @@ public class TransactionManagerController {
 
     }
 
-
     /**
      * Enables buttons related to specific account types and disables them if that account type is not selected
      */
@@ -114,7 +112,7 @@ public class TransactionManagerController {
     public void clearButtonClick(){
         firstNameInput.clear();
         lastNameInput.clear();
-        dateInput.setValue(null);
+        dateInput.clear();
         checkingButton.setSelected(false);
         collegeCheckingButton.setSelected(false);
         savingsButton.setSelected(false);
@@ -133,7 +131,7 @@ public class TransactionManagerController {
     public void interactionClearButtonClick(ActionEvent event){
         interactionFirstNameInput.clear();
         interactionLastNameInput.clear();
-        interactionDateInput.setValue(null);
+        interactionDateInput.clear();
         checkingInteractionButton.setSelected(false);
         collegeCheckingInteractionButton.setSelected(false);
         savingsInteractionButton.setSelected(false);
@@ -201,7 +199,7 @@ public class TransactionManagerController {
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
         String lastName = interactionLastNameInput.getText();
-        String dob = convertDate(interactionDateInput.getValue().toString());
+        String dob = interactionDateInput.getText();
         String balance = interactionAmount.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -219,7 +217,7 @@ public class TransactionManagerController {
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
         String lastName = interactionLastNameInput.getText();
-        String dob = convertDate(interactionDateInput.getValue().toString());
+        String dob = interactionDateInput.getText();
         String balance = interactionAmount.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -260,7 +258,7 @@ public class TransactionManagerController {
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
-        String dob = convertDate(dateInput.getValue().toString());
+        String dob = dateInput.getText();
         String balance = balanceInput.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob + " " + balance;
@@ -287,41 +285,26 @@ public class TransactionManagerController {
     }
 
     /**
-     * Converts the date from the date selector into the form month/day/year
-     * @param dateInput The information from the date selector
-     * @return The date formatted to month/day/year
-     */
-    private String convertDate(String dateInput)
-    {
-        StringTokenizer stringTokenizer = new StringTokenizer(dateInput, "-");
-        String year = stringTokenizer.nextToken();
-        String month = stringTokenizer.nextToken();
-        String day = stringTokenizer.nextToken();
-
-        return month + "/" + day + "/" + year;
-    }
-
-    /**
      * This method adds the account to the database and appends the openCloseTextArea object with a String representation of it.
      * @param stringTokenizer the String representation of the account
      */
     private void openAccount(StringTokenizer stringTokenizer)
     {
-        if(stringTokenizer.countTokens() < O_STRING_TOKENIZER_MIN_SIZE && stringTokenizer.countTokens() != O_STRING_TOKENIZER_MAX_SIZE)
-        {
+        if(stringTokenizer.countTokens() < O_STRING_TOKENIZER_MIN_SIZE && stringTokenizer.countTokens() != O_STRING_TOKENIZER_MAX_SIZE) {
             openCloseTextArea.appendText("Missing data for opening an account."+ "\n");
             return;
         }
         String accountInput = stringTokenizer.nextToken();
-
         Account account;
-
         if(isValidAccountInput(accountInput)) {
             account = processAccountTypeInput(accountInput);
         }
-
         else {
             openCloseTextArea.appendText("Invalid Account Type"+ "\n");
+            return;
+        }
+        if((account.getClass() == CollegeChecking.class|| account.getClass() == Savings.class) && stringTokenizer.countTokens() < O_STRING_TOKENIZER_MIN_SIZE){
+            openCloseTextArea.appendText("Missing data for opening an account."+ "\n");
             return;
         }
         if(!processProfileInput(stringTokenizer.nextToken(),stringTokenizer.nextToken(),stringTokenizer.nextToken(),account) ) {
@@ -354,7 +337,7 @@ public class TransactionManagerController {
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
-        String dob = convertDate(dateInput.getValue().toString());
+        String dob = dateInput.getText();
 
         String toBeTokenized = accountType + " " + firstName + " " + lastName + " " + dob;
 

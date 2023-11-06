@@ -216,11 +216,7 @@ public class Date implements Comparable<Date> {
     public boolean notLate() {
         Calendar date = Calendar.getInstance();
         Calendar currentDate = Calendar.getInstance();
-        //System.out.println("Current Date: " + currentDate.toString());
-
         currentDate.add(Calendar.MONTH, WITHINSIXMONTHS);
-        //System.out.println("6 Months From Now: " + currentDate.toString());
-        //System.out.println("Date to add: " + date.toString());
         date.set(Calendar.MONTH, this.getMonth());
         date.set(Calendar.YEAR, this.getYear());
         date.set(Calendar.DAY_OF_MONTH, this.getDay());
