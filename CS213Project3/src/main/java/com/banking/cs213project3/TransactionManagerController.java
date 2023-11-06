@@ -50,6 +50,10 @@ public class TransactionManagerController {
     private TextArea openCloseTextArea;
 
 
+    /**
+     * Handles the event where the load accounts button is clicked
+     * Creates a file chooser prompt for the user to select an appropriate file to be processed
+     */
     public void loadAccountsButtonClick(){
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(new Stage());
@@ -103,8 +107,11 @@ public class TransactionManagerController {
         }
     }
 
-    //TO DO!!!!
-    public void clearButtonClick(ActionEvent event){
+    /**
+     * Processes the clear button on the Open/Close Account tab
+     * Clears all unprocessed inputs on the GUI
+     */
+    public void clearButtonClick(){
         firstNameInput.clear();
         lastNameInput.clear();
         dateInput.setValue(null);
@@ -119,6 +126,10 @@ public class TransactionManagerController {
         balanceInput.clear();
     }
 
+    /**
+     * Processes the clear button on the Deposit/Withdrawal tab
+     * Clears all unprocessed inputs on the GUI
+     */
     public void interactionClearButtonClick(ActionEvent event){
         interactionFirstNameInput.clear();
         interactionLastNameInput.clear();
@@ -157,10 +168,9 @@ public class TransactionManagerController {
     }
 
     /**
-     * This method returns the type of accoun that is chosen by the user.
+     * This method returns the type of account that is chosen by the user.
      * @return a String representations of the account type
      */
-
     private String getInteractionAccountType(){
 
         if(checkingInteractionButton.isSelected()){
@@ -185,9 +195,8 @@ public class TransactionManagerController {
     }
 
     /**
-     * this basically allows the user to deposit an ammount in the account.
+     * Deposits into an account based on the information in the Deposit/Withdrawal tab
      */
-
     public void depositClick(){
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
@@ -202,10 +211,10 @@ public class TransactionManagerController {
         depositAccount(stringTokenizer);
     }
 
-    /**
-     * this basically allows the user to withdraw an ammount from the account.
-     */
 
+    /**
+     * Withdraws from an account based on the information in the Deposit/Withdrawal tab
+     */
     public void withdrawClick(){
         String accountType = getInteractionAccountType();
         String firstName = interactionFirstNameInput.getText();
@@ -221,10 +230,9 @@ public class TransactionManagerController {
     }
 
     /**
-     * The methods returns the campus code for the user who is using the account.
+     * Returns the campus code based on which campus Radio Button is selected
      * @return the String value of the campus for the College Student holding the account.
      */
-
     private String getCampusCode(){
         if(newBrunswickButton.isSelected()){
             return "0";
@@ -244,7 +252,10 @@ public class TransactionManagerController {
     }
 
 
-    public void openButtonClick(ActionEvent event){
+    /**
+     * Opens an account based on the information in the Open/Close Account tab
+     */
+    public void openButtonClick(){
 
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
@@ -277,8 +288,8 @@ public class TransactionManagerController {
 
     /**
      * Converts the date from the date selector into the form month/day/year
-     * @param dateInput
-     * @return
+     * @param dateInput The information from the date selector
+     * @return The date formatted to month/day/year
      */
     private String convertDate(String dateInput)
     {
@@ -294,7 +305,6 @@ public class TransactionManagerController {
      * This method adds the account to the database and appends the openCloseTextArea object with a String representation of it.
      * @param stringTokenizer the String representation of the account
      */
-
     private void openAccount(StringTokenizer stringTokenizer)
     {
         if(stringTokenizer.countTokens() < O_STRING_TOKENIZER_MIN_SIZE && stringTokenizer.countTokens() != O_STRING_TOKENIZER_MAX_SIZE)
@@ -338,11 +348,9 @@ public class TransactionManagerController {
     }
 
     /**
-     * This handles the implementation of when an event is clicked.
-     * @param event the event that is the cases when the close button is clicked
+     * Closes an Account based on information in the Open/Close Account tab
      */
-
-    public void closeButtonClick(ActionEvent event){
+    public void closeButtonClick(){
         String accountType = getAccountType();
         String firstName = firstNameInput.getText();
         String lastName = lastNameInput.getText();
@@ -355,10 +363,9 @@ public class TransactionManagerController {
     }
 
     /**
-     * This method closes the account with the String Tokenizer representation of it.
-     * @param stringTokenizer the String representation of the account.
+     * This method closes the account based on information given by a stringTokenizer
+     * @param stringTokenizer Holds the information to close the account
      */
-
     private void closeAccount(StringTokenizer stringTokenizer){
         if(stringTokenizer.countTokens() != C_STRING_TOKENIZER_SIZE)
         {
@@ -395,10 +402,9 @@ public class TransactionManagerController {
     }
 
     /**
-     * It deposits the account with the account mentioned in the String Tokenizer object.
-     * @param stringTokenizer the String representation of the given account.
+     * It deposits the account with using the information in the String Tokenizer object.
+     * @param stringTokenizer Holds the information to deposit into the account
      */
-
     private void depositAccount(StringTokenizer stringTokenizer){
         if(stringTokenizer.countTokens() != O_STRING_TOKENIZER_MIN_SIZE)
         {
@@ -440,8 +446,8 @@ public class TransactionManagerController {
     }
 
     /**
-     * It withdraws from the account with the account mentioned in the String Tokenizer object.
-     * @param stringTokenizer the String representation of the given account.
+     * It withdraws from the account with the information contained in the String Tokenizer object.
+     * @param stringTokenizer Holds the information to withdraw from an account
      */
     private void withdrawAccount(StringTokenizer stringTokenizer){
         if(stringTokenizer.countTokens() != O_STRING_TOKENIZER_MIN_SIZE)
@@ -482,28 +488,18 @@ public class TransactionManagerController {
         }
     }
 
-
-    //TO DO!!!!
-    public void clearButtonClick(ActionEvent event){
-
-    }
-
     /**
      * The event handler for when the user clicks the print account option which calls the print accounts function.
-     * @param event the case when printAccounts is clicked or chosen.
      */
-
-    public void printAccountsClick(ActionEvent event){
+    public void printAccountsClick(){
         printAccounts();
     }
 
     /**
      * The event handler for when the user clicks the print account with fees and interests option which calls the print accounts and with fees and
      * interests function.
-     * @param event the case when printAccountsFeesAndInterestsClick is clicked or chosen.
      */
-
-    public void printAccountsFeesAndInterestsClick(ActionEvent event){
+    public void printAccountsFeesAndInterestsClick(){
         printAccountsWithFeesAndInterests();
     }
 
@@ -511,9 +507,8 @@ public class TransactionManagerController {
      * The event handler for when the user clicks the update the account with fees and interests option which calls the print
      * updated accounts function.
      * function.
-     * @param event the case when updateFeesAndInterestsClick is clicked or chosen.
      */
-    public void updateFeesAndInterestsClick(ActionEvent event){
+    public void updateFeesAndInterestsClick(){
         printUpdatedAccounts();
     }
 
@@ -560,7 +555,6 @@ public class TransactionManagerController {
     /**
      * Prints accounts based on the String representation of it sorted by type of profile with the updated interests and fees.
      */
-
     private void printUpdatedAccounts(){
         if(accountDatabase.getNumAcct() == 0)
         {

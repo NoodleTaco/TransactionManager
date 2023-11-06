@@ -180,7 +180,8 @@ public class AccountDatabase {
     }
 
     /**
-     * prints the accounts array in a sorted manner based on their account types and profiles.
+     * Concatenates a string holding all the accounts sorted
+     * @return A string delimited by #@ of the sorted accounts
      */
     public String printSorted()
     {
@@ -194,7 +195,8 @@ public class AccountDatabase {
     } //sort by account type and profile
 
     /**
-     * Prints the fees and interests of the accounts array.
+     * Concatenates a string holding all the accounts sorted with fees and interests
+     * @return A string delimited by #@ of the sorted accounts
      */
     public String printFeesAndInterests()
     {
@@ -208,7 +210,8 @@ public class AccountDatabase {
     } //calculate interests/fees
 
     /**
-     * Print the updated balances of the accounts array.
+     * Concatenates a string holding all the updated accounts sorted
+     * @return A string delimited by #@ of the updated sorted accounts
      */
     public String printUpdatedBalances()
     {
