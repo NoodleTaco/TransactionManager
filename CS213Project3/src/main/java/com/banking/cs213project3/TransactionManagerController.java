@@ -636,25 +636,24 @@ public class TransactionManagerController {
 
         Date date = new Date(month, day, year);
 
-        if(!date.isValid())
-        {
+        if(!date.isValid()) {
             openCloseTextArea.appendText("DOB invalid: " + date.toString() + " not a valid calendar date!"+ "\n");
             return false;
         }
-        if(!date.isPast())
-        {
+        if(!date.isPast()) {
             openCloseTextArea.appendText("DOB invalid: " + date.toString() + ": cannot be today or a future day."+ "\n");
             return false;
         }
-        if(account instanceof CollegeChecking)
-        {
-
-            if(date.getYearsOld() >= CC_ACCOUNT_HOLDER_MAX_AGE)
-            {
+        if(account instanceof CollegeChecking) {
+            if(date.getYearsOld() >= CC_ACCOUNT_HOLDER_MAX_AGE) {
                 openCloseTextArea.appendText("DOB invalid: " + date.toString() + " over 24."+ "\n");
                 return false;
             }
 
+            if(date.getYearsOld() < ACCOUNT_HOLDER_MIN_AGE) {
+                openCloseTextArea.appendText("DOB invalid: " + date.toString() + " under 16."+ "\n");
+                return false;
+            }
         }
         else
         {
