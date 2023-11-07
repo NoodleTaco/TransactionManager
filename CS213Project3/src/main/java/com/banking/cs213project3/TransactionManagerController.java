@@ -9,6 +9,10 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.File;
 
+/**
+ * Controller for the JavaFX GUI
+ * @author Donald Yubeaton, Michael Kassie
+ */
 public class TransactionManagerController {
 
     private AccountDatabase accountDatabase;
@@ -128,7 +132,7 @@ public class TransactionManagerController {
      * Processes the clear button on the Deposit/Withdrawal tab
      * Clears all unprocessed inputs on the GUI
      */
-    public void interactionClearButtonClick(ActionEvent event){
+    public void interactionClearButtonClick(){
         interactionFirstNameInput.clear();
         interactionLastNameInput.clear();
         interactionDateInput.clear();

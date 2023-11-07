@@ -32,7 +32,7 @@ public abstract class Account implements Comparable<Account> {
 
     /**
      * sets the profile of the account instance to specific value.
-     *
+     * @param profile The profile the account will be set with
      */
     public void setProfile(Profile profile)
     {
@@ -41,7 +41,7 @@ public abstract class Account implements Comparable<Account> {
 
     /**
      * sets the balance of the account instance to specific value.
-     *
+     * @param balance The balance the account will be set with
      */
     public void setBalance(double balance)
     {

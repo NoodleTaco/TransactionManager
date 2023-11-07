@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Main Class to launch the GUI
+ * @author Donald Yubeaton, Michael Kassie
+ */
 public class TransactionManagerMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {

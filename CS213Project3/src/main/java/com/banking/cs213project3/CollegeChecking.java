@@ -29,8 +29,7 @@ public class CollegeChecking extends Account{
         this.campus = campus;
     }
     /**
-     * This method returns the monthly interest rate of the College checking account
-     * @return MONTHLY_INTEREST_RATE of the college checking account.
+     * Clone Constructor
      */
     public CollegeChecking(CollegeChecking collegeChecking)
     {
