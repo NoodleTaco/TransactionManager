@@ -1,5 +1,6 @@
 ## Transaction Manager
 Utilizes JavaFX to simulate a banking application an employee would use to store and iteract with accounts. 
+Start the project by running TransactionManagerMain.java
 
 ### Add/Close Account
 Provides the functionality to open or close an account. 
